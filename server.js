@@ -10,6 +10,7 @@ var assert = require('assert');
 var bodyParser = require("body-parser");
 var express = require('express');
 var cors = require('cors');
+var convert = require('xml-js');
 var app = express();
 // var url = 'mongodb://root:secure@ds161483.mlab.com:61483/asefall17';
 var url = 'mongodb://appstest:appstest123@ds137003.mlab.com:37003/apps';
@@ -59,6 +60,15 @@ app.get('/getHackData', function (req, res) {
     });
 });
 
+app.get('/kg', function (req, res) {
+    var searchKeyword = req.query.query;
+    console.log("searchKeyword is XXXXX",searchKeyword);
+    client.get("https://www.boardgamegeek.com/xmlapi/boardgame/"+searchKeyword+"&indent=True", function (error, response, body) {
+        var xml = body;
+        var result1 = convert.xml2json(xml, {compact: true, spaces: 4});
+        res.send(result1);
+    });
+});
 
 
 

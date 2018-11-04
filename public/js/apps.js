@@ -29,17 +29,20 @@ myapp.controller('indexctrl', function($scope, $http,$window) {
                     var document=[];
                     for (i=0;i<d.data.length;i++)
                     {
-                        document.push(new Array(d.data[i].game_id+'!!!'+d.data[i].names));
+                        $http.get('http://127.0.0.1:5000/kg?query='+d.data[i].game_id).success(function (data) {
+                            try {
+
+                                console.log(data);
+                                $scope.searchDescription = data.boardgames.boardgame.description._text;
+                                $scope.searchImage = data.boardgames.boardgame.image._text;
+                                console.log($scope.searchDescription);
+                            }
+                            catch (err) {
+                            }
+                        })
+                        document.push(new Array($scope.searchDescription));
                     }
                     console.log(document);
-
-
-                    $scope.fullDocument =[];
-                    for(var x=0;x<6;x++) {
-                        var val= document[x];
-                        console.log('Data is '+document[x]);
-                        $scope.fullDocument.push(val);
-                    }
 
 
                     // console.log("it is already present" + d.data[0]);
