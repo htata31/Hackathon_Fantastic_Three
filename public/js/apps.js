@@ -13,7 +13,7 @@ myapp.controller('indexctrl', function($scope, $http,$window) {
 
 
     $scope.getSearchResult = function() {
-
+        $scope.gamesArray =[];
         console.log($scope.players);
         console.log($scope.time);
 
@@ -22,32 +22,33 @@ myapp.controller('indexctrl', function($scope, $http,$window) {
 
         $http.get('http://127.0.0.1:5000/getHackData?keywords='+$scope.players+'!!!'+$scope.time+'@@@'+document.getElementById("interest").value).then(function(d)
             {
-                console.log("Len is already present"+d.data.length);
-                console.log("val already present"+JSON.stringify({d: d}));
+                var document=[];
+                //console.log("Len is already present"+d.data.length);
+                //console.log("val already present"+JSON.stringify({d: d}));
                 if(d.data.length!=0) {
 
-                    var document=[];
+
                     for (i=0;i<d.data.length;i++)
                     {
-                        $http.get('http://127.0.0.1:5000/kg?query='+d.data[i].game_id).success(function (data) {
-                            try {
+                            $http.get('http://127.0.0.1:5000/kg?query=' + d.data[i].game_id).success(function (data) {
+                                try {
 
-                                console.log(data);
-                                $scope.searchDescription = data.boardgames.boardgame.description._text;
-                                $scope.searchImage = data.boardgames.boardgame.image._text;
-                                console.log($scope.searchDescription);
-                            }
-                            catch (err) {
-                            }
-                        })
-                        document.push(new Array($scope.searchDescription));
+                                    //console.log(data);
+                                    $scope.searchDescription = (data.boardgames.boardgame.description._text).replace(/<br\/>/g,"");
+                                    $scope.searchImage = data.boardgames.boardgame.image._text;
+                                    $scope.gamedetailsHeader="Game Details";
+                                    //console.log($scope.searchDescription);
+                                    $scope.gamesArray.push($scope.searchDescription+"^^^"+$scope.searchImage);
+                                }
+                                catch (err) {
+                                }
+                            })
+                            //document.push($scope.searchDescription);
                     }
-                    console.log(document);
-
-
-                    // console.log("it is already present" + d.data[0]);
-
                 }
+                setTimeout(function () {
+                    console.log("Document--------------" + $scope.gamesArray);
+                },1000);
 
             },function(err)
             {

@@ -155,7 +155,7 @@
 								</select>
 							</div>
 							<!--<button class="button search_button">search<span></span><span></span><span></span></button>-->
-							<input type="button" class="button search_button" style="padding:9px 18px;" onclick="hideFunction()"  ng-click="getSearchResult()" value="Find"/>
+							<input type="button" class="button search_button" style="padding:9px 18px;" onclick="hideFunction()"  ng-click="getSearchResult()" value="Find"/><br/><br/>
 						</form>
 					</div>
 				</div>
@@ -164,17 +164,25 @@
 	</div>
 <div id="resDIV" class="search" style="display:none">
 	<div>
-		<div class="container fill_height">
-			<div class="row fill_height">
-				<div class="col fill_height">
-		<div class="search_item">
-			<table id="weather" class="" border="3">
+		<div class="container fill_height" style="width:100%;">
+			<div class="row fill_height" style="width:100%;">
+				<div class="col fill_height" style="width:100%;">
+		<div class="search_item" style="width:100%;">
+			<table  >
 				<tr>
-					<th style="color: black">Game Details</th>
+				<th style="color: black">Game Details</th>
 				</tr>
-				<tr ng-repeat="x in document">
-					<td style="color: black">{{x}}</td>
-				</tr>
+			</table>
+			<table ng-repeat="x in gamesArray" id="weather" class="" border="3">
+				<!--<tr>-->
+					<!--<th style="color: black">Game Details</th>-->
+				<!--</tr>-->
+					<tr >
+						<td style="color: black">{{x.substring(0,x.indexOf("^^^"))}}</td>
+					</tr>
+					<tr >
+						<td><img style="width: 200px" ng-src="{{x.substring(x.indexOf('^^^')+3,x.length)}}"/></td>
+					</tr>
 			</table>
 		</div>
 		</div>

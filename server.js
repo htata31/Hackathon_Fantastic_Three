@@ -1,8 +1,8 @@
 var express = require('express')
 var app = express();
 var request= require('request-json');
-const nodemailer = require ('nodemailer');
-const xoauth2 =  require ('xoauth2') ;
+//const nodemailer = require ('nodemailer');
+//const xoauth2 =  require ('xoauth2') ;
 
 
 var MongoClient = require('mongodb').MongoClient;
